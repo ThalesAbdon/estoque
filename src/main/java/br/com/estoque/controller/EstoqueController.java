@@ -1,14 +1,16 @@
 package br.com.estoque.controller;
 
 import br.com.estoque.controller.request.IncluirEstoqueRequest;
+import br.com.estoque.service.BuscarEstoquesQuantidadeBaixa;
+import br.com.estoque.service.BuscarEstoquesVencidos;
 import br.com.estoque.service.IncluirEstoqueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/estoques")
@@ -16,6 +18,11 @@ public class EstoqueController {
 
     @Autowired
     private IncluirEstoqueService incluirEstoqueService;
+
+    @Autowired
+    private BuscarEstoquesQuantidadeBaixa estoquesQuantidadeBaixa;
+    @Autowired
+    private BuscarEstoquesVencidos buscarEstoquesVencidos;
 
     @PostMapping("/incluir")
     public ResponseEntity<String> incluir(@RequestBody IncluirEstoqueRequest request) {
@@ -25,5 +32,16 @@ public class EstoqueController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao adicionar o estoque.");
         }
+    }
+    @GetMapping("/estoque-baixo")
+    public ResponseEntity<List<Map<String, Object>>> getFornecedoresComEstoqueBaixo() {
+        List<Map<String, Object>> response = estoquesQuantidadeBaixa.getFornecedoresComEstoqueBaixo();
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/estoque-vencido")
+    public ResponseEntity<List<Map<String, Object>>> getFornecedoresComEstoqueVencidos() {
+        List<Map<String, Object>> response = buscarEstoquesVencidos.getFornecedoresComEstoqueVencido();
+        return ResponseEntity.ok(response);
     }
 }

@@ -2,11 +2,13 @@ package br.com.estoque.controller.response;
 
 import br.com.estoque.model.Estoque;
 import br.com.estoque.model.Fornecedor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+@Builder
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProdutoResponse {
     private Integer codigo;
 
