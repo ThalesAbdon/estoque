@@ -1,11 +1,9 @@
 package br.com.estoque.service;
 
-
-import br.com.estoque.controller.request.IncluirEstoqueRequest;
+import br.com.estoque.controller.request.ComprarProdutoRequest;
 import br.com.estoque.exceptions.FornecedorInexistente;
 import br.com.estoque.exceptions.ProdutoInexistente;
 import br.com.estoque.exceptions.ProdutoJaExisteException;
-import br.com.estoque.model.Estoque;
 import br.com.estoque.repository.EstoqueRepository;
 import br.com.estoque.repository.FornecedorRepository;
 import br.com.estoque.repository.ProdutoRepository;
@@ -13,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class IncluirEstoqueService {
+public class ComprarProdutoService {
     @Autowired
     private EstoqueRepository estoqueRepository;
 
@@ -21,8 +19,7 @@ public class IncluirEstoqueService {
     private ProdutoRepository produtoRepository;
     @Autowired
     private FornecedorRepository fornecedorRepository;
-
-    public void save(IncluirEstoqueRequest request) {
+    public void comprar(ComprarProdutoRequest request) {
         var produto = produtoRepository.findByCodigo(request.getCodigoProduto());
         if ( produto == null) {
             throw new ProdutoInexistente(request.getCodigoProduto());
@@ -33,12 +30,16 @@ public class IncluirEstoqueService {
             throw new FornecedorInexistente(request.getCnpjFornecedor());
         }
 
-        Estoque estoque = new Estoque();
-        estoque.setProduto(produto);
-        estoque.setFornecedor(fornecedor);
-        estoque.setQuantidade(request.getQuantidade());
-        estoque.setDataValidade(request.getValidadeProdutos());
+        var estoque = estoqueRepository.findByProdutoAndFornecedor(produto, fornecedor);
+        if ( estoque == null) {
+            throw new RuntimeException();
+        }
 
+        if(estoque.getQuantidade() < request.getQuantidade()){
+            throw new RuntimeException();
+        }
+
+        estoque.setQuantidade(estoque.getQuantidade() - request.getQuantidade());
         estoqueRepository.save(estoque);
     }
 }

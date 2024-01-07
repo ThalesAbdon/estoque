@@ -14,10 +14,12 @@ public class BuscarProduto {
     @Autowired
     private ProdutoRepository produtoRepository;
 
-    public ProdutoResponse Pesquisar(Long id) {
-        Produto produto = produtoRepository.findById(id)
-                .orElseThrow(() -> new ProdutoInexistente(id));
+    public ProdutoResponse Pesquisar(Integer id) {
+        Produto produto = produtoRepository.findByCodigo(id);
 
+        if (produto == null) {
+            throw new ProdutoInexistente(id);
+        }
         return ProdutoMapper.mapToResponse(produto);
     }
 }

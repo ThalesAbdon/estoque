@@ -1,8 +1,10 @@
 package br.com.estoque.controller;
 
+import br.com.estoque.controller.request.ComprarProdutoRequest;
 import br.com.estoque.controller.request.IncluirProdutoRequest;
 import br.com.estoque.controller.response.ProdutoResponse;
 import br.com.estoque.service.BuscarProduto;
+import br.com.estoque.service.ComprarProdutoService;
 import br.com.estoque.service.IncluirProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,9 +17,10 @@ public class ProdutoController {
 
     @Autowired
     private IncluirProdutoService incluirProdutoService;
-
     @Autowired
     private BuscarProduto buscarProduto;
+    @Autowired
+    private ComprarProdutoService comprarProdutoService;
 
     @PostMapping("/incluir")
     public ResponseEntity<String> incluir(@RequestBody IncluirProdutoRequest request) {
@@ -35,7 +38,12 @@ public class ProdutoController {
     }
 
     @GetMapping("{id}")
-    public ProdutoResponse pesquisar(@PathVariable Long id) {
-        return buscarProduto.Pesquisar(id);
+    public ProdutoResponse pesquisar(@PathVariable Integer codigo) {
+        return buscarProduto.Pesquisar(codigo);
+    }
+
+    @PostMapping("/comprar")
+    public void comprar(@RequestBody ComprarProdutoRequest request) {
+        comprarProdutoService.comprar(request);
     }
 }

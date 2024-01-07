@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @Setter
@@ -24,4 +26,8 @@ public class Estoque {
     @ManyToOne
     @JoinColumn(name = "produto_id")
     private Produto produto;
+
+    private LocalDate dataValidade;
+
+    private Integer quantidade;
 }
