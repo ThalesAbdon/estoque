@@ -14,7 +14,7 @@ public class BuscarProduto {
     @Autowired
     private ProdutoRepository produtoRepository;
 
-    public ProdutoResponse Pesquisar(Integer id) {
+    public ProdutoResponse pesquisar(Integer id) {
         Produto produto = produtoRepository.findByCodigo(id);
 
         if (produto == null) {

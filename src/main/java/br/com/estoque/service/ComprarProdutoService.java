@@ -1,9 +1,7 @@
 package br.com.estoque.service;
 
 import br.com.estoque.controller.request.ComprarProdutoRequest;
-import br.com.estoque.exceptions.FornecedorInexistente;
-import br.com.estoque.exceptions.ProdutoInexistente;
-import br.com.estoque.exceptions.ProdutoJaExisteException;
+import br.com.estoque.exceptions.*;
 import br.com.estoque.repository.EstoqueRepository;
 import br.com.estoque.repository.FornecedorRepository;
 import br.com.estoque.repository.ProdutoRepository;
@@ -31,12 +29,12 @@ public class ComprarProdutoService {
         }
 
         var estoque = estoqueRepository.findByProdutoAndFornecedor(produto, fornecedor);
-        if ( estoque == null) {
-            throw new RuntimeException();
+        if (estoque == null) {
+            throw new EstoqueNaoEncontradoException(request.getCodigoProduto());
         }
 
-        if(estoque.getQuantidade() < request.getQuantidade()){
-            throw new RuntimeException();
+        if (estoque.getQuantidade() < request.getQuantidade()) {
+            throw new QuantidadeInsuficienteException();
         }
 
         estoque.setQuantidade(estoque.getQuantidade() - request.getQuantidade());

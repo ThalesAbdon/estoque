@@ -1,8 +1,6 @@
 package br.com.estoque.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,4 +29,11 @@ public class Lote {
 
     private LocalDate validade;
 
+    @ManyToOne
+    @JoinColumn(name = "id_fornecedor")
+    private Fornecedor fornecedor;
+
+    @ManyToOne
+    @JoinColumn(name = "produto_id")
+    private Produto produto;
 }

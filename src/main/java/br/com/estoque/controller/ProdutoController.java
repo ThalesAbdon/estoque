@@ -37,9 +37,9 @@ public class ProdutoController {
         return "teste";
     }
 
-    @GetMapping("{id}")
+    @GetMapping("{codigo}")
     public ProdutoResponse pesquisar(@PathVariable Integer codigo) {
-        return buscarProduto.Pesquisar(codigo);
+        return buscarProduto.pesquisar(codigo);
     }
 
     @PostMapping("/comprar")
