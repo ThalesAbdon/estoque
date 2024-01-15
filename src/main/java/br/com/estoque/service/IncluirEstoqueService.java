@@ -4,7 +4,6 @@ package br.com.estoque.service;
 import br.com.estoque.controller.request.IncluirEstoqueRequest;
 import br.com.estoque.exceptions.FornecedorInexistente;
 import br.com.estoque.exceptions.ProdutoInexistente;
-import br.com.estoque.exceptions.ProdutoJaExisteException;
 import br.com.estoque.model.Estoque;
 import br.com.estoque.repository.EstoqueRepository;
 import br.com.estoque.repository.FornecedorRepository;
