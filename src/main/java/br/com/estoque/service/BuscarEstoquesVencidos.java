@@ -21,6 +21,10 @@ public class BuscarEstoquesVencidos {
     public List<Map<String, Object>> getFornecedoresComEstoqueVencido() {
         var result = estoqueRepository.findFornecedoresComEstoqueVencido();
 
+        if(result.isEmpty()) {
+            return List.of();
+        }
+
         return result.stream()
                 .map(objects -> {
                     Fornecedor fornecedor = (Fornecedor) objects[0];

@@ -1,6 +1,7 @@
 package br.com.estoque.service;
 
 import br.com.estoque.controller.request.ComprarLoteRequest;
+import br.com.estoque.exceptions.DadosInvalidosException;
 import br.com.estoque.exceptions.EstoqueNaoEncontradoException;
 import br.com.estoque.exceptions.ProdutoInexistente;
 import br.com.estoque.model.Estoque;
@@ -18,6 +19,12 @@ public class ComprarLoteService {
     @Autowired
     private ProdutoRepository produtoRepository;
     public void comprar(ComprarLoteRequest request) {
+        if (request.getCodigoProduto() == null ||
+                request.getQuantidade() < 1 ||
+                request.getQuantidade() == null) {
+            throw new DadosInvalidosException();
+        }
+
         int quantidadeTotalDisponivel = estoqueRepository.countQuantidadeTotal(request.getCodigoProduto());
         if (quantidadeTotalDisponivel < request.getQuantidade()) {
             throw new RuntimeException("Não há estoque suficiente para atender à quantidade desejada.");

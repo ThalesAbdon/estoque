@@ -35,12 +35,6 @@ class ComprarLoteServiceTest {
     @Mock
     private ProdutoRepository produtoRepository;
 
-
-    @BeforeEach
-    public void setup() {
-        // Inicialize os mocks antes de cada teste
-        // MockitoAnnotations.openMocks(this);
-    }
     @Test
     @DisplayName("Deve comprar com sucesso")
     void comprar() {
@@ -52,7 +46,7 @@ class ComprarLoteServiceTest {
         Produto produto = new Produto();
         produto.setCodigo(1);
 
-        Estoque estoque = new Estoque(); // Configurar o objeto Estoque conforme necessário
+        Estoque estoque = new Estoque();
         estoque.setProduto(produto);
         estoque.setQuantidade(10);
 
@@ -72,43 +66,37 @@ class ComprarLoteServiceTest {
 
     @Test
     public void testComprarQuantidadeExcedente() {
-        ComprarLoteRequest request = new ComprarLoteRequest(); // Configurar o objeto conforme necessário
-        request.setQuantidade(10); // Quantidade desejada maior do que o estoque disponível
+        ComprarLoteRequest request = new ComprarLoteRequest();
+        request.setQuantidade(10);
         request.setCodigoProduto(1);
 
-        // Configurar o cenário onde não há estoque suficiente
-        when(estoqueRepository.countQuantidadeTotal(any())).thenReturn(5); // Quantidade total disponível
+        when(estoqueRepository.countQuantidadeTotal(any())).thenReturn(5);
 
-        // Verificar se a exceção é lançada
         assertThrows(RuntimeException.class, () -> tested.comprar(request));
     }
 
     @Test
     public void testProdutoInexistente() {
-        ComprarLoteRequest request = new ComprarLoteRequest(); // Configurar o objeto conforme necessário
+        ComprarLoteRequest request = new ComprarLoteRequest();
         request.setQuantidade(1);
         request.setCodigoProduto(123231);
 
-        // Configurar o cenário onde o produto não existe
         when(estoqueRepository.countQuantidadeTotal(any())).thenReturn(5);
         when(produtoRepository.findByCodigo(any())).thenReturn(null);
 
-        // Verificar se a exceção é lançada
         assertThrows(ProdutoInexistente.class, () -> tested.comprar(request));
     }
 
     @Test
     public void testEstoqueNaoEncontrado() {
-        ComprarLoteRequest request = new ComprarLoteRequest(); // Configurar o objeto conforme necessário
+        ComprarLoteRequest request = new ComprarLoteRequest();
         request.setQuantidade(1);
         request.setCodigoProduto(123231);
 
-        // Configurar o cenário onde o produto não existe
         when(estoqueRepository.countQuantidadeTotal(any())).thenReturn(5);
         when(produtoRepository.findByCodigo(any())).thenReturn(new Produto());
         when(estoqueRepository.findProdutosMaisProximosDeVencer(any())).thenReturn(Collections.emptyList());
 
-        // Verificar se a exceção é lançada
         assertThrows(EstoqueNaoEncontradoException.class, () -> tested.comprar(request));
     }
 }
