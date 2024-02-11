@@ -6,24 +6,18 @@ Para a tarefa de incluir um novo produto no sistema de gestão de estoque, você
 1. **Objetivo Geral:** Desenvolver uma funcionalidade para incluir um novo produto no sistema, utilizando uma API REST.
 
 2. **Entradas e Validacões:**
-    - A funcionalidade deve receber como entrada os dados do produto a ser incluído através de um `POST` request no endpoint `/incluir`.
+    - A funcionalidade deve receber como entrada os dados do produto(Um classe IncluirProdutoRequest com os campos) a ser incluído através de um `POST` request no endpoint `/incluir`.
     - Os dados do produto incluem `codigo`, `descricao`, `estoqueMinimo`, `lucro`, `precoDeCompra`, `quantidade` e `precoDeVenda`.
     - Antes de incluir o produto, o sistema deve verificar se já existe um produto com o mesmo código no banco de dados. Caso exista, deve lançar uma exceção de `ProdutoJaExisteException`.
     - O sistema deve validar os dados de entrada, garantindo que nenhum campo obrigatório esteja vazio ou com valores inválidos (ex.: valores negativos para `codigo`, `estoqueMinimo`, `lucro`, `precoDeCompra`, `quantidade`, e `precoDeVenda`). Em caso de dados inválidos, deve lançar uma exceção de `DadosInvalidosException`.
 
 3. **Processamento e Armazenamento:**
-    - Após a validação, os dados do produto devem ser mapeados para um objeto `Produto` e salvos no banco de dados.
+    - Após a validação, os dados do produto devem ser mapeados para um objeto `Produto`(O dados devem ser mapeado através de um mapper) e salvos no banco de dados.
     - Utilize o `ProdutoRepository` para interagir com o banco de dados.
 
 4. **Resposta:**
     - Se o produto for incluído com sucesso, a API deve retornar uma resposta com status `201 CREATED` e uma mensagem indicando sucesso.
     - Em caso de falha na inclusão do produto (por exemplo, se as validações falharem ou ocorrer um erro no servidor), a API deve retornar uma resposta com status `500 INTERNAL SERVER ERROR` e uma mensagem de erro adequada.
-
-### Diretrizes Adicionais
-
-- Siga as boas práticas de programação e padrões de codificação Java e Spring Boot.
-- Garanta que o código seja limpo, bem organizado e documentado, facilitando a manutenção e compreensão.
-- Desenvolva testes unitários para a funcionalidade, assegurando que todas as validações e o processo de inclusão do produto funcionem corretamente.
 
 ### Entrega
 

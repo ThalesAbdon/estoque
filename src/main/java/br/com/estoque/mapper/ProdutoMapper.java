@@ -1,6 +1,5 @@
 package br.com.estoque.mapper;
 
-import br.com.estoque.controller.request.IncluirProdutoRequest;
 import br.com.estoque.controller.response.ProdutoResponse;
 import br.com.estoque.model.Produto;
 import lombok.NoArgsConstructor;
