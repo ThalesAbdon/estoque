@@ -17,9 +17,6 @@ public interface EstoqueRepository extends JpaRepository<Estoque, Long> {
     @Query("SELECT e.fornecedor, e.produto, e.quantidade FROM Estoque e WHERE e.produto.estoqueMinimo > e.quantidade")
     List<Object[]> findFornecedoresComEstoqueBaixo();
 
-    @Query("SELECT e.fornecedor, e.produto, e.quantidade FROM Estoque e WHERE e.dataValidade < CURRENT_DATE AND e.quantidade > 0")
-    List<Object[]> findFornecedoresComEstoqueVencido();
-
     @Query("SELECT e FROM Estoque e WHERE e.produto.codigo = :codigoProduto AND e.quantidade > 0 ORDER BY e.dataValidade ASC")
     List<Estoque> findProdutosMaisProximosDeVencer(@Param("codigoProduto") Integer codigoProduto);
 
