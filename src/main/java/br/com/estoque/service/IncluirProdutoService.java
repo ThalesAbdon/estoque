@@ -36,7 +36,6 @@ public class IncluirProdutoService {
         }
         Produto produto = mapToProduto(request);
 
-        //produto.setEstoque(estoque);
         return mapToResponse(produtoRepository.save(produto));
     }
 }

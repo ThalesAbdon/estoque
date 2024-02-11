@@ -10,6 +10,8 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProdutoResponse {
+    private Long id;
+
     private Integer codigo;
 
     private Integer quantidade;

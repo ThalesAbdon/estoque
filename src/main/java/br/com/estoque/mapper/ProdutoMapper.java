@@ -24,6 +24,7 @@ public class ProdutoMapper {
 
     public static ProdutoResponse mapToResponse(Produto produto) {
         ProdutoResponse response = new ProdutoResponse();
+        response.setId(produto.getId());
         response.setCodigo(produto.getCodigo());
         response.setQuantidade(produto.getQuantidade());
         response.setEstoqueMinimo(produto.getEstoqueMinimo());
