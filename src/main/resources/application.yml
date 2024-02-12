@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/estoque
     username: postgres
-    password: postgres
+    password: pg123
   jpa:
     hibernate:
       ddl-auto: update

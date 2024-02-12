@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
     Produto findByCodigo(Integer codigo);
+
+    boolean existsByCodigo(Integer codigo);
 }
