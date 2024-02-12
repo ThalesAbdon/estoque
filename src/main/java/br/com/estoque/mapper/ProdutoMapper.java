@@ -9,18 +9,6 @@ import static lombok.AccessLevel.PRIVATE;
 @NoArgsConstructor(access = PRIVATE)
 public class ProdutoMapper {
 
-    public static Produto mapToProduto(IncluirProdutoRequest request) {
-        Produto produto = new Produto();
-        produto.setCodigo(request.getCodigo());
-        produto.setQuantidade(request.getQuantidade());
-        produto.setEstoqueMinimo(request.getEstoqueMinimo());
-        produto.setDescricao(request.getDescricao());
-        produto.setPrecoDeCompra(request.getPrecoDeCompra());
-        produto.setPrecoDeVenda(request.getPrecoDeVenda());
-        produto.setLucro(request.getLucro());
-        return produto;
-    }
-
     public static ProdutoResponse mapToResponse(Produto produto) {
         ProdutoResponse response = new ProdutoResponse();
         response.setId(produto.getId());
